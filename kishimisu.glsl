@@ -57,15 +57,17 @@ void main()
     float phase = d / FREQ - u_time * speed;
     float wave = sin(phase * 6.28318530718) * 0.5 + 0.5;
     wave = pow(wave, 4.0);
-    // WHY DOESJT THIS WORK?
-    wave = palette(fract(u_time*0.01)*wave);
+    wave = fract(u_time*0.1)*wave;
     //wave = abs(wave);
     
-    vec3 bg = palette(fract(u_time*0.05)); 
-    //vec3 color = vec3(1.0 - box - wave * glow);
-    vec3 color = vec3(box+wave);
+    //vec3 bg = palette(fract(u_time*0.05)); 
+
+    //wave = palette(fract(u_time*0.1)*wave);
+    float col = 1.0 - box - wave * glow; 
+    vec3 color = vec3(col);
+    //vec3 color = vec3(box+wave);
     //color = vec3(uvf.x, uvf.y, 0.0);
     //color = vec3(corner);
-    color = palette(box)+wave;
+    //color = palette(box)+wave;
     gl_FragColor = vec4(color, 1.0);
 }
