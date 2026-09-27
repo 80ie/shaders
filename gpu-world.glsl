@@ -4,9 +4,9 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-const float FREQ = 1.0;
+const float FREQ = 5.0;
 const float GRID_SIZE = 5.0;
-const float speed = 0.7;
+const float speed = 0.15;
 
 vec3 palette( float t )
 { 
@@ -47,9 +47,13 @@ void main()
     vec3 bg = palette(fract(u_time*0.05)); 
 
     float d = length(uv-mouse);
+    float glow = 1.0 - smoothstep(0.0, 3.0, length(uv - mouse));
     //float wave = sin(d*FREQ - u_time)/FREQ;
-    float wave = sin(d - u_time * speed);
-    wave = pow(wave, 2.0);
+    float phase = d / FREQ - u_time * speed;
+    float wave = sin(phase * 6.28318530718) * 0.5 + 0.5;
+    wave = pow(wave, 4.0);
+    wave = fract(u_time*0.1)*wave;
+    //wave = pow(wave, .0);
     //float wave = d * 1.0 - u_time * 0.5;
     //wave = abs(wave);
     //wave = smoothstep(0.0, 0.9, wave);
@@ -58,6 +62,6 @@ void main()
     box = smoothstep(.0, 0.5, box);
     
 
-    vec3 color = vec3(wave+box);
+    vec3 color = vec3(palette(box-glow+wave));
     gl_FragColor = vec4(color, 0.5);
 }
