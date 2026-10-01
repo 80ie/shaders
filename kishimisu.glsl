@@ -64,7 +64,7 @@ void main()
 
     //wave = palette(fract(u_time*0.1)*wave);
     float col = 1.0 - box - wave * glow; 
-    vec3 color = vec3(col);
+    vec3 color = vec3(palette(wave));
     //vec3 color = vec3(box+wave);
     //color = vec3(uvf.x, uvf.y, 0.0);
     //color = vec3(corner);
