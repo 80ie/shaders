@@ -1,0 +1,11 @@
+{
+    "glsl-canvas.uniforms": {
+        "u_zoom": 0.4,
+        "u_spin": 0.6,
+        "u_warp": 0.5,
+        "u_freq": 0.4,
+        "u_wspeed": 0.4,
+        "u_sharp": 0.25,
+        "u_tint": [1.0, 1.0, 1.0]
+    }
+}

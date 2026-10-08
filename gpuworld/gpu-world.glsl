@@ -70,7 +70,7 @@ void main()
     
     
     //color = vec3(uv,0.0);
-    //color = vec3(col);
+    color = palette(col);
     
     gl_FragColor = vec4(color, 0.5);
 }
