@@ -4,53 +4,55 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-float pcurve( float x, float a, float b ){
-    float k = pow(a+b,a+b) / (pow(a,a)*pow(b,b));
-    return k * pow( x, a ) * pow( 1.0-x, b );
-}
+const vec2 g = vec2(2.0); // GRID SIZE
+
+vec2 r = u_resolution;
+vec2 mouse = u_mouse/r;
 
 vec2 warp_uv(vec2 uv, float phase, float freq) {
-    vec2 p = uv;
     float l = u_time;
-    p -= 0.5;
-    p.x *= u_resolution.x/u_resolution.y;
-    l = length(p);
-    uv += p / l*(sin(phase) + 1.0) * abs(sin(l * freq - 2.0*phase));
+    l = length(uv);
+    uv += uv / l*(sin(phase) + 1.0) * abs(sin(l * freq - 2.0*phase));
     return uv;
 }
 
-void main() {
-    vec2 r = u_resolution;
-    vec2 st = gl_FragCoord.xy / u_resolution.xy;
-    vec3 color = vec3(0.0);
-    vec2 grid_size = vec2(3.0);
-    vec2 mouse = u_mouse/u_resolution;
-    mouse.x *= r.x/r.y;
-
-    st = warp_uv(st, u_time, 8.0);
-    st *= grid_size;
-    mouse *= grid_size;
-    //st.x *= aspect;
-
-    vec2 ist = floor(st);
-    vec2 fst = fract(st);
-
-
+float grid(vec2 uv, vec2 grid_size) {
+    vec2 f = fract(uv);
     float m_dist = 1.;
     for (int y= -1; y <= 1; y++) {
 		for (int x= -1; x <= 1; x++) {
 			vec2 neighbor = vec2(float(x),float(y));
 			vec2 point = neighbor + vec2(0.5);
-            vec2 diff = neighbor + point - fst;
+            vec2 diff = neighbor + point - f;
 			float dist = length(diff);
 			m_dist = min(m_dist, dist);
 		}
 	}
-
-    float dist = distance(st, mouse);
-    //m_dist = min(m_dist, dist);
     m_dist = pow(m_dist, 2.0);
-    color += m_dist;
+    return m_dist;
+}
 
+vec2 rot( vec2 uv, float angle ) {
+    mat2 matrix = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+    uv = matrix * uv;
+    return uv;
+}
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / r.xy;
+    vec3 color = vec3(0.0);
+    vec3 c;
+    
+    uv.x *= r.x/r.y;
+    uv -= 0.5;
+    uv *= g;
+    mouse *= g;
+    
+    uv = rot(uv, u_time*0.3);
+    vec2 p = warp_uv(uv, u_time, 9.0);
+    
+    float d = grid(uv+p, g); 
+    color += d;
+    
     gl_FragColor = vec4(color, 1.0);
 }
