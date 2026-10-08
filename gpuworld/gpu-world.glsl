@@ -6,7 +6,7 @@ uniform float u_time;
 
 const float FREQ = 5.0;
 const float GRID_SIZE = 5.0;
-const float speed = 0.2;
+const float speed = 0.15;
 
 vec3 palette( float t )
 { 
@@ -51,6 +51,8 @@ void main()
     
     float d = length(uv-mouse);
     vec2 o = mouse - 0.3;
+    float dfield = smoothstep(0.0,5.0,length(uvi-mouse-uvf));
+    dfield =  smoothstep(0.0,2.5,distance(mouse, uvi));
     float dir = min((o.x,o.y),0.0) + length(max(uv, 0.0)); 
     
    
@@ -60,9 +62,9 @@ void main()
     float wave = sin(phase * 6.28318530718) * 0.5 + 0.5;
     wave = pow(wave, 5.0);
     
-    float col = 1.0 - box * glow + wave;
+    float col = box + dfield * glow + wave;
     
-    vec3 color = vec3(dir);
+    vec3 color = vec3(box+dfield);
     
     
     
