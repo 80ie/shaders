@@ -11,6 +11,8 @@ const float FREQ = 3.5;
 const float WARP_SPEED = 0.1;
 const float SHARP = 3.0;
 
+// adapted from Danilo Guanabara's "Creation"
+// https://www.shadertoy.com/view/XsXXDn
 vec2 warp_uv(vec2 uv, float phase, float freq, float amount) {
     float l = u_time;
     l = length(uv);

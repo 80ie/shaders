@@ -4,11 +4,11 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-const vec2 G = vec2(3.0);
+const vec2 G = vec2(2.0);
 const float SPIN = 0.00;
-const float WARP = 0.6;
-const float FREQ = 3.5;
-const float WARP_SPEED = 0.1;
+const float WARP = 5.0;
+const float FREQ = 1.0;
+const float WARP_SPEED = 0.03;
 const float SHARP = 3.0;
 
 vec2 warp_uv(vec2 uv, float phase, float freq, float amount) {

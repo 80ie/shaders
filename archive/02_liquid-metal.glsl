@@ -9,6 +9,7 @@ const vec2 g = vec2(2.0); // GRID SIZE
 vec2 r = u_resolution;
 vec2 mouse = u_mouse/r;
 
+
 vec2 warp_uv(vec2 uv, float phase, float freq) {
     float l = u_time;
     l = length(uv);
@@ -43,8 +44,9 @@ void main() {
     vec3 color = vec3(0.0);
     vec3 c;
     
-    uv.x *= r.x/r.y;
+    
     uv -= 0.5;
+    uv.x *= r.x/r.y;
     uv *= g;
     mouse *= g;
     
