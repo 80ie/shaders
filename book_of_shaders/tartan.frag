@@ -30,6 +30,8 @@ void main() {
     float over = float(mod(id.x - id.y, 4.) < 2.);
     vec3 col = mix(weft, warp, over);
 
-    col *= .6 + .4 * sin(3.14159 * (over > .5 ? f.y : f.x));
+    float acrossFactor = 0.6 + .4 * sin(3.14159 * (over > .5 ? f.x : f.y));
+    float alongFactor = 0.9 + 0.1 * sin(3.14159 * (over > .5 ? f.y : f.x));
+    col *= alongFactor * acrossFactor;
     gl_FragColor = vec4(col, 1.);
 }
