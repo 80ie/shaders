@@ -2,8 +2,11 @@
 precision highp float;
 #endif
 
+#include "lygia/math/const.glsl"
+#include "lygia/color/hueShift.glsl"
+
 uniform vec2 u_resolution;
-const float ZOOM = 4.;
+const float ZOOM = 10.;
 const float ANGLE = 30.;
 
 vec3 thread(float t) {
@@ -12,7 +15,7 @@ vec3 thread(float t) {
     if (t < 5.) return vec3(0.1);
     if (t < 14.) return vec3(1.2);
     if (t < 23.) return vec3(0.1);
-    if (t < 49) return vec3(0.90);
+    if (t < 49.) return vec3(0.90);
     return vec3(1.0, .05, 0.);
 }
 
