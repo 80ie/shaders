@@ -7,7 +7,7 @@ precision highp float;
 
 uniform vec2 u_resolution;
 const float ZOOM = 10.;
-const float ANGLE = 30.;
+const float ANGLE = 0.;
 
 vec3 thread(float t) {
     t = mod(t, 100.);
